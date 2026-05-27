@@ -1,0 +1,426 @@
+﻿@page "/app02"
+@rendermode InteractiveServer
+@using System.ComponentModel.DataAnnotations
+
+<div class="cyber-container d-flex align-items-center justify-content-center">
+    <div class="orb orb-blue"></div>
+    <div class="orb orb-purple"></div>
+
+    <div class="glass-card shadow-2xl animate-fade-in">
+        <div class="glass-header text-center position-relative">
+            <div class="neon-badge">
+                <span class="blink-dot"></span> SYSTEM CORE: APP 02
+            </div>
+            <h2 class="cyber-title mt-2">Validation Engine</h2>
+            <div class="header-line"></div>
+        </div>
+
+        <div class="glass-body p-4">
+            <EditForm Model="@userModel" OnValidSubmit="@HandleValidSubmit" FormName="CyberValidationForm">
+                <DataAnnotationsValidator />
+
+                <div class="input-wrapper mb-3">
+                    <label class="field-label">
+                        <i class="bi bi-cpu-fill text-cyan me-2"></i>First Name
+                    </label>
+                    <div class="cyber-input-group">
+                        <InputText @bind-Value="userModel.FirstName" class="cyber-input" placeholder="user first name..." />
+                        <span class="neon-border-glow"></span>
+                    </div>
+                    <div class="validation-error-space">
+                        <ValidationMessage For="@(() => userModel.FirstName)" class="text-danger-cyber" />
+                    </div>
+                </div>
+
+                <div class="input-wrapper mb-3">
+                    <label class="field-label">
+                        <i class="bi bi-cpu-fill text-cyan me-2"></i>Last Name
+                    </label>
+                    <div class="cyber-input-group">
+                        <InputText @bind-Value="userModel.LastName" class="cyber-input" placeholder="user last name..." />
+                        <span class="neon-border-glow"></span>
+                    </div>
+                    <div class="validation-error-space">
+                        <ValidationMessage For="@(() => userModel.LastName)" class="text-danger-cyber" />
+                    </div>
+                </div>
+
+                <div class="input-wrapper mb-4">
+                    <label class="field-label">
+                        <i class="bi bi-envelope-fill text-cyan me-2"></i>Email Address
+                    </label>
+                    <div class="cyber-input-group">
+                        <InputText @bind-Value="userModel.Email" class="cyber-input" placeholder="user email address" />
+                        <span class="neon-border-glow"></span>
+                    </div>
+                    <div class="validation-error-space">
+                        <ValidationMessage For="@(() => userModel.Email)" class="text-danger-cyber" />
+                    </div>
+                </div>
+
+                <div class="text-center mt-2 mb-2">
+                    <button type="submit" class="cyber-btn">
+                        <i class="bi bi-shield-lock-fill me-2"></i>SUBMIT
+                    </button>
+                </div>
+            </EditForm>
+
+            @if (isSubmittedSuccessfully)
+            {
+                <div class="cyber-output-panel matrix-ready mt-4 animate-fade-in">
+                    <div class="panel-scanner"></div>
+                    <h3 class="output-greeting">
+                        <span class="dynamic-highlight">System Verified!</span>
+                    </h3>
+                    <p class="text-white-50 small mt-2 mb-0">
+                        Welcome, <strong>@userModel.FirstName @userModel.LastName</strong>
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="cyber-output-panel matrix-waiting mt-4">
+                    <div class="panel-scanner"></div>
+                    <h3 class="output-greeting" style="font-size: 1.1rem; color: #475569; text-align: center;">
+                        <span class="cursor">>_</span> Awaiting Form Submission..
+                    </h3>
+                </div>
+            }
+
+            <div class="text-center mt-4 d-flex justify-content-between align-items-center">
+                <a href="/" class="cyber-nav-link">← Data Binding (App 01)</a>
+                <a href="/app03" class="cyber-nav-link text-cyan">Task Matrix Engine (App 03) →</a>
+            </div>
+        </div>
+
+        <div class="glass-footer d-flex justify-content-between align-items-center">
+        </div>
+    </div>
+</div>
+
+@code {
+    private UserModel userModel = new UserModel();
+    private bool isSubmittedSuccessfully = false;
+
+    private void HandleValidSubmit()
+    {
+        isSubmittedSuccessfully = true;
+    }
+
+    public class UserModel
+    {
+        [Required(ErrorMessage = "First name is a required field.")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Last name is a required field.")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Email address is required.")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email format.")]
+        public string Email { get; set; } = string.Empty;
+    }
+}
+
+<style>
+    /* Main Futuristic Canvas Background */
+    .cyber-container {
+        min-height: 100vh;
+        background: #0a0e17;
+        position: relative;
+        overflow: hidden;
+        padding: 40px 15px;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Ambient Decorative Orbs */
+    .orb {
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        filter: blur(130px);
+        opacity: 0.25;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .orb-blue {
+        background: #00f2fe;
+        top: 15%;
+        left: 20%;
+        animation: float-slow 8s infinite alternate;
+    }
+
+    .orb-purple {
+        background: #9b51e0;
+        bottom: 15%;
+        right: 20%;
+        animation: float-slow 12s infinite alternate-reverse;
+    }
+
+    /* Glassmorphism Structural Core Card CSS */
+    .glass-card {
+        background: rgba(13, 20, 35, 0.65);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 600px;
+        z-index: 10;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 242, 254, 0.05);
+        overflow: hidden;
+    }
+
+    .glass-header {
+        padding: 35px 30px 20px 30px;
+    }
+
+    .neon-badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(0, 242, 254, 0.08);
+        border: 1px solid rgba(0, 242, 254, 0.3);
+        color: #00f2fe;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 30px;
+        letter-spacing: 2px;
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+    }
+
+    .blink-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #00f2fe;
+        border-radius: 50%;
+        margin-right: 8px;
+        display: inline-block;
+        animation: blink 1.5s infinite;
+    }
+
+    .cyber-title {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 2rem;
+        letter-spacing: -0.5px;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .header-line {
+        height: 2px;
+        width: 60px;
+        background: linear-gradient(90deg, #00f2fe, #4facfe);
+        margin: 20px auto 0 auto;
+        border-radius: 2px;
+    }
+
+    .field-label {
+        color: #cbd5e1;
+        font-size: 0.88rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .cyber-input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: rgba(10, 15, 30, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        padding: 6px 16px;
+        transition: all 0.4s ease;
+    }
+
+    .cyber-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        padding: 10px 0;
+        color: #ffffff;
+        font-size: 1rem;
+    }
+
+        .cyber-input::placeholder {
+            color: #4b5563;
+        }
+
+    .cyber-input-group:focus-within {
+        border-color: #00f2fe;
+        box-shadow: 0 0 25px rgba(0, 242, 254, 0.25);
+        background: rgba(10, 15, 30, 0.95);
+    }
+
+    /* Cyber Engine Action Button */
+    .cyber-btn {
+        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        color: #0a0e17;
+        font-weight: 700;
+        letter-spacing: 1px;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 12px;
+        width: 100%;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .cyber-btn:hover {
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.5);
+            transform: translateY(-2px);
+        }
+
+    /* Fixed validation spaces to prevent structural layouts jumping */
+    .validation-error-space {
+        min-height: 22px;
+        padding-top: 4px;
+        padding-left: 4px;
+    }
+
+    .text-danger-cyber {
+        color: #ff4a5a;
+        font-size: 0.78rem;
+        font-weight: 600;
+        display: block;
+        text-shadow: 0 0 10px rgba(255, 74, 90, 0.2);
+    }
+
+    .text-cyan {
+        color: #00f2fe;
+    }
+
+    .cyber-output-panel {
+        position: relative;
+        border-radius: 16px;
+        padding: 24px;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+        .cyber-output-panel.matrix-waiting {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+        }
+
+        .cyber-output-panel.matrix-ready {
+            background: rgba(0, 242, 254, 0.03);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.05), 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+    .panel-scanner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #00f2fe, transparent);
+        opacity: 0.4;
+        animation: scan 4s linear infinite;
+    }
+
+    .output-greeting {
+        font-size: 1.4rem;
+        color: #f8fafc;
+        margin-bottom: 0;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+    }
+
+    .dynamic-highlight {
+        color: #00f2fe;
+        font-weight: 700;
+        text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+    }
+
+    .cursor {
+        animation: blink 0.8s infinite;
+        color: #00f2fe;
+    }
+
+    .glass-footer {
+        background: rgba(5, 8, 16, 0.5);
+        padding: 20px 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .faculty-tag {
+        font-size: 0.78rem;
+    }
+
+    .text-muted-cyber {
+        color: #475569;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    .text-purple-glow {
+        color: #c084fc;
+        text-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
+    }
+
+    .cyber-nav-link {
+        color: #00f2fe;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.9rem;
+        text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        transition: all 0.3s ease;
+    }
+
+        .cyber-nav-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 15px #ffffff;
+        }
+
+    @@keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @@keyframes scan {
+        0% {
+            top: 0%;
+        }
+
+        50% {
+            top: 100%;
+        }
+
+        100% {
+            top: 0%;
+        }
+    }
+
+    @@keyframes float-slow {
+        0% {
+            transform: translateY(0px) scale(1);
+        }
+
+        100% {
+            transform: translateY(-30px) scale(1.1);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

@@ -1,0 +1,208 @@
+﻿@page "/app05"
+@rendermode InteractiveServer
+@using Assignment4_App5.Services
+@inject AuthenticationStateService AuthService
+@implements IDisposable
+
+<div class="cyber-container d-flex align-items-center justify-content-center">
+    <div class="orb orb-blue"></div>
+    <div class="orb orb-purple"></div>
+
+    <div class="glass-card shadow-2xl animate-fade-in">
+        <div class="glass-header text-center position-relative">
+            <div class="neon-badge">
+                <span class="blink-dot"></span> SYSTEM CORE: APP 05
+            </div>
+            <h2 class="cyber-title mt-2">State Management Engine</h2>
+            <div class="header-line"></div>
+        </div>
+
+        <div class="glass-body p-4">
+
+            <UserProfile />
+
+            <Login />
+
+            <div class="text-center mt-5 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <a href="/app04" class="cyber-nav-link">← Pulse Tracker (App 04)</a>
+                <a href="/app06" class="cyber-nav-link text-cyan">Dependency Injection (App 06) →</a>
+            </div>
+        </div>
+
+        <div class="glass-footer d-flex justify-content-between align-items-center">
+           
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        AuthService.OnStateChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AuthService.OnStateChange -= StateHasChanged;
+    }
+}
+
+<style>
+    /* Exact CSS Replica of App04 UI Structure */
+    .cyber-container {
+        min-height: 100vh;
+        background: #0a0e17;
+        position: relative;
+        overflow: hidden;
+        padding: 40px 15px;
+    }
+
+    .orb {
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        filter: blur(130px);
+        opacity: 0.22;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .orb-blue {
+        background: #00f2fe;
+        top: 15%;
+        left: 20%;
+        animation: float-slow 8s infinite alternate;
+    }
+
+    .orb-purple {
+        background: #9b51e0;
+        bottom: 15%;
+        right: 20%;
+        animation: float-slow 12s infinite alternate-reverse;
+    }
+
+    .glass-card {
+        background: rgba(13, 20, 35, 0.75);
+        backdrop-filter: blur(25px) saturate(190%);
+        -webkit-backdrop-filter: blur(25px) saturate(190%);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 580px;
+        z-index: 10;
+        box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 242, 254, 0.04);
+        overflow: hidden;
+    }
+
+    .glass-header {
+        padding: 35px 30px 15px 30px;
+    }
+
+    .neon-badge {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(0, 242, 254, 0.06);
+        border: 1px solid rgba(0, 242, 254, 0.25);
+        color: #00f2fe;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 30px;
+        letter-spacing: 2px;
+    }
+
+    .blink-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #00f2fe;
+        border-radius: 50%;
+        margin-right: 8px;
+        display: inline-block;
+        animation: blink 1.5s infinite;
+    }
+
+    .cyber-title {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 2.1rem;
+        font-family: 'Inter', system-ui, sans-serif;
+        letter-spacing: -0.5px;
+    }
+
+    .header-line {
+        height: 2px;
+        width: 55px;
+        background: linear-gradient(90deg, #00f2fe, #4facfe);
+        margin: 18px auto 0 auto;
+    }
+
+    .cyber-nav-link {
+        color: #00f2fe;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+    }
+
+        .cyber-nav-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #ffffff;
+        }
+
+    .glass-footer {
+        background: rgba(5, 8, 16, 0.6);
+        padding: 22px 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .faculty-tag {
+        font-size: 0.78rem;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .text-muted-cyber {
+        color: #475569;
+        font-weight: 500;
+    }
+
+    .text-cyan {
+        color: #00f2fe;
+    }
+
+    .text-purple-glow {
+        color: #c084fc;
+        text-shadow: 0 0 10px rgba(192, 132, 252, 0.2);
+    }
+
+    @@keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+    @@keyframes float-slow {
+        0% {
+            transform: translateY(0px);
+        }
+
+        100% {
+            transform: translateY(-25px);
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

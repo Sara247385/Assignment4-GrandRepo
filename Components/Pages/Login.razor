@@ -1,0 +1,65 @@
+﻿@using Assignment4_App5.Services
+@inject AuthenticationStateService AuthService
+@implements IDisposable
+
+<div class="action-control-zone w-100 text-center my-2">
+    @if (!AuthService.IsAuthenticated)
+    {
+        <button class="cyber-btn btn-add w-100 py-3 fw-bold animate-fade-in" @onclick="AuthService.LogIn">
+            <i class="bi bi-shield-lock-fill me-2"></i>Log In
+        </button>
+    }
+    else
+    {
+        <button class="cyber-btn btn-logout w-100 py-3 fw-bold animate-fade-in" @onclick="AuthService.LogOut">
+            <i class="bi bi-power me-2"></i>Log Out
+        </button>
+    }
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        AuthService.OnStateChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AuthService.OnStateChange -= StateHasChanged;
+    }
+}
+
+<style>
+    .cyber-btn {
+        font-family: 'Inter', system-ui, sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+    }
+
+    .btn-add {
+        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        color: #0a0e17;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+    }
+
+        .btn-add:hover {
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.45);
+            transform: translateY(-2px);
+        }
+
+    .btn-logout {
+        background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+        color: #ffffff;
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+    }
+
+        .btn-logout:hover {
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.4);
+            transform: translateY(-2px);
+        }
+</style>
