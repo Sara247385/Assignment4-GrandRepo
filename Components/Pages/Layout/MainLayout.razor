@@ -1,0 +1,44 @@
+﻿@inherits LayoutComponentBase
+
+<div class="full-viewport-app">
+    <main class="main-terminal-frame">
+        <div class="app-render-body">
+            @Body
+        </div>
+    </main>
+</div>
+
+<style>
+    /* Absolute System Canvas Fixes */
+    .full-viewport-app {
+        display: block;
+        width: 100vw;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        background-color: #0a0e17 !important;
+        overflow-x: hidden;
+    }
+
+    .main-terminal-frame {
+        width: 100%;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: #0a0e17 !important;
+    }
+
+    .app-render-body {
+        width: 100%;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Standardized background engine elements for child pages */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #0a0e17 !important;
+    }
+</style>
